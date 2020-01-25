@@ -1,3 +1,4 @@
+// @ts-nocheck
 /*
   EXAMPLE TASK:
     - Write an Airplane class whose constructor initializes `name` from an argument.
@@ -86,10 +87,28 @@ class Car {
     this.tank = 0;
     this.odometer = 0;
   }
+  fill(gallons) {
+    this.gallons = gallons;
+    this.tank = gallons + this.tank;
+  }
+  drive(distance) {
+    
+    let fuel = distance/this.milesPerGallon;
 
+    if(this.tank <= fuel) {
+      fuel = this.tank;
+      this.tank -= fuel;
+      this.tank = 0;
+      this.odometer = distance - 1;
+
+      return `I ran out of fuel at ${this.odometer} miles!`; } 
+      
+    else {
+      this.odometer = distance;
+      this.tank = fuel;
+    }
+  }
 }
-
-let car = new Car ();
 
 /*
   TASK 3
@@ -104,8 +123,13 @@ let car = new Car ();
         + {name} and {location} of course come from the instance's own properties.
 */
 class Lambdasian {
-
+  constructor(obj) {
+    this.name = obj.name;
+    this.age = obj.age;
+    this.location = obj.location;
+  }
 }
+
 
 /*
   TASK 4
