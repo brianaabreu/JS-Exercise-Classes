@@ -91,13 +91,12 @@ class Car {
     this.gallons = gallons;
     this.tank = gallons + this.tank;
   }
-  drive(distance) {
-    
+  drive(distance) {  
     let fuel = distance/this.milesPerGallon;
 
     if(this.tank <= fuel) {
       fuel = this.tank;
-      this.tank -= fuel;
+      this.tank = fuel;
       this.tank = 0;
       this.odometer = distance - 1;
 
@@ -128,7 +127,18 @@ class Lambdasian {
     this.age = obj.age;
     this.location = obj.location;
   }
+  speak() {
+      return `Hello my name is ${this.name}, I am from ${this.location}`;
+  }
 }
+
+const me = new Lambdasian ({
+  name: 'Briana',
+  location: 'Las Vegas',
+  age: 18
+})
+
+console.log(me.speak())
 
 
 /*
@@ -137,7 +147,7 @@ class Lambdasian {
     - Its constructor takes a single argument - an object with the following keys:
         + All the keys used to initialize instances of Lambdasian.
         + `specialty`: what the instance of Instructor is good at, i.e. 'redux'
-        + `favLanguage`: i.e. 'JavaScript, Python, Elm etc.'
+        + `favLanguage`: i.e. 'JavaScript', Python, Elm etc.'
         + `catchPhrase`: i.e. `Don't forget the homies`.
     - The constructor calls the parent constructor passing it what it needs.
     - The constructor should also initialize `specialty`, `favLanguage` and `catchPhrase` properties on the instance.
@@ -145,9 +155,28 @@ class Lambdasian {
         + `demo` receives a `subject` string as an argument and returns the phrase 'Today we are learning about {subject}' where subject is the param passed in.
         + `grade` receives a `student` object and a `subject` string as arguments and returns '{student.name} receives a perfect score on {subject}'
 */
-class Instructor {
-
+class Instructor extends Lambdasian {
+    constructor(inst) {
+      super(inst);
+      this.specialty = inst.specialty;
+      this.favLanguage = inst.favLanguage;
+      this.catchPhrase = inst.catchPhrase;
+    }
+    demo(subject){
+        return `Today we are learning about ${subject}`;
+    }
+    grade(student, subject){
+        return `${student.name} recieves a perfect score on ${subject}`
+    }
 }
+
+let instruct = new Instructor({
+  name: 'Briana',
+  location: 'Las Vegas',
+  age: 18,
+  specialty: 'redux', 
+  favLanguage: 'Javascript',
+  catchPhrase: 'hey there'});
 
 /*
   TASK 5
@@ -164,9 +193,36 @@ class Instructor {
         + `PRAssignment` a method that receives a subject as an argument and returns `student.name has submitted a PR for {subject}`
         + `sprintChallenge` similar to PRAssignment but returns `student.name has begun sprint challenge on {subject}`
 */
-class Student {
-
+class Student extends Lambdasian {
+  constructor(stud) {
+    super(stud)
+    this.previousBackground = stud.previousBackground;
+    this.className = stud.className; 
+    this.favSubjects = stud.favSubjects;
+  }
+  listSubjects(){
+    return `Loving ${this.favSubjects}`
+  }
+  PRAssignment(subject) {
+    return `${this.name} has begun sprint challenge on ${subject}`;
+  }
+  sprintChallenge(subject){
+    return `${this.name} has begun sprint challenge on ${subject}`
+  }
 }
+
+let kid = new Student({
+  name: 'Briana',
+  location: 'Las Vegas',
+  age: 18,
+  specialty: 'redux', 
+  favLanguage: 'Javascript',
+  catchPhrase: 'hey there',
+  previousBackground: "cook",
+  className: "Web PT14",
+  favSubjects: ["Html", "Css"]
+  });
+
 
 /*
   TASK 6
@@ -181,9 +237,31 @@ class Student {
         + `standUp` a method that takes in a slack channel and returns `{name} announces to {channel}, @channel standy times!`
         + `debugsCode` a method that takes in a student object and a subject and returns `{name} debugs {student.name}'s code on {subject}`
 */
-class ProjectManager {
-
+class ProjectManager extends Instructor {
+    constructor(grad) {
+      super(grad);
+      this.gradClassName = grad.gradClassName;
+      this.favInstructor = grad.favInstructor;
+    }
+    standUp(channel){
+      return `${this.name} announces to ${channel}, @channel standy times!`
+    }
+    debugsCode(student, subject) {
+      return `${this.name} debugs ${student.name}'s code on ${subject}`;
+    }
 }
+
+let information = new ProjectManager({
+  name: 'Briana',
+  location: 'Las Vegas',
+  age: 18,
+  specialty: 'redux', 
+  favLanguage: 'Javascript',
+  catchPhrase: 'hey there',
+  gradClassName: "Web PT14",
+  favInstructor: "Diandra"  
+});
+
 
 /*
   STRETCH PROBLEM (no tests!)
